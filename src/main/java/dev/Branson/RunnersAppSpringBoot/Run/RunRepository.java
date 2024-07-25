@@ -3,15 +3,17 @@ package dev.Branson.RunnersAppSpringBoot.Run;
 
 //This class stores all the data from the diffrent runs made
 //It encapsulates all the data access and records of the run
-//Its an In memory database
+//It is an In memory database
 
 import jakarta.annotation.PostConstruct;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class RunRepository {
 
     //Method to get all the runs and store them in an array
@@ -20,6 +22,15 @@ public class RunRepository {
     //Calling the findAll() method returns all the runs stored in the system
     List<Run> findAll () {
         return  runs;
+    }
+
+    //Method that returns a run by ID
+    //It takes in run ID
+    Run findById(Integer id) {
+        return runs.stream()
+                .filter(run -> run.id() == id)
+                .findFirst()
+                .get();
     }
 
     //Annotation for initialization of a run

@@ -13,18 +13,42 @@ import java.util.List;
  * the response body would be in JSOn
  *
  */
-
+//Rest controller
 @RestController
 
+/***
+ * This annotation at the controller level ensures that the get mapping, post mapping and put mapping falls under
+ * the base uri ("/api/runs")
+ */
+@RequestMapping ("/api/runs")
 public class RunController {
 
-    //CRUD operations controller to manage the runs to return response
-    private List<Run> runs = new ArrayList<>();
+//    //CRUD operations controller to manage the runs to return response
+//    private List<Run> runs = new ArrayList<>();
+//
+//    //Controller for get
+//    //This endpoint will return a string hello
+//    @GetMapping("/hello")
+//    String home() {
+//        return "Hello, Runners";
+//    }
 
-    //Controller for get
-    //This endpoint will return a string hello
-    @GetMapping("/hello")
-    String home() {
-        return "Hello, Runners";
+    //Constructor for the run repository
+    private final RunRepository runRepository;
+
+    public RunController(RunRepository runRepository){ //dependency injection of the runcontroller into the constructor
+        this.runRepository = runRepository;
+    }
+    //method to return a list of all stored runs in the uri
+    //@GetMapping("/api/runs") -> initial uri before defining the @RequestMapping annotation
+    @GetMapping("")
+    List<Run> findAll () {
+        return runRepository.findAll();
+    }
+
+    //mapping from the base uri that will return the run id
+    @GetMapping("/1")
+    Run findById() {
+       return runRepository.findById(1);
     }
 }
