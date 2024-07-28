@@ -1,6 +1,7 @@
 package dev.Branson.RunnersAppSpringBoot.Run;
 
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -17,7 +18,7 @@ import java.util.Optional;
 //Rest controller
 @RestController
 
-/***
+/*
  * This annotation at the controller level ensures that the get mapping, post mapping and put mapping falls under
  * the base uri ("/api/runs")
  */
@@ -37,7 +38,7 @@ public class RunController {
     //Constructor for the run repository
     private final RunRepository runRepository;
 
-    public RunController(RunRepository runRepository){ //dependency injection of the runcontroller into the constructor
+    public RunController(RunRepository runRepository){ //dependency injection of the run-controller into the constructor
         this.runRepository = runRepository;
     }
     //method to return a list of all stored runs in the uri
@@ -53,7 +54,7 @@ public class RunController {
     Run findById(@PathVariable Integer id) {
         Optional<Run> run = runRepository.findById(id);
         if(run.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Run not found");
+            throw new RunNotFoundException();
         }
         return run.get();
     }
@@ -73,11 +74,11 @@ public class RunController {
     //to test a post request , use post man
     @ResponseStatus(HttpStatus.CREATED)  //Anotation for the return status
     @PostMapping("")  //@PostMapping defines the raw data to be posted
-    void  create (@RequestBody Run run) {
+    void  create (@Valid  @RequestBody Run run) {
         runRepository.create(run);
     }
 
-    //PUT
+    //PUT,UPDATE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
     void update(@RequestBody Run run,@PathVariable Integer id) {
