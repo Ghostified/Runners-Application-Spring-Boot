@@ -1,12 +1,13 @@
 package dev.Branson.RunnersAppSpringBoot.Run;
 
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This is the rest controller class
@@ -47,8 +48,34 @@ public class RunController {
     }
 
     //mapping from the base uri that will return the run id
-    @GetMapping("/1")
-    Run findById() {
-       return runRepository.findById(1);
+    //The method uses a dynamic path variable using the @PathVariable annotation
+    @GetMapping("/{id}")
+    Run findById(@PathVariable Integer id) {
+        Optional<Run> run = runRepository.findById(id);
+        if(run.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        return run.get();
     }
+
+    //mapping from the base uri that will return the run id
+    //The method uses a hard coded id -> 1 to return runs using the method findById(1
+    //@GetMapping("/1")
+   // Run findById() {
+    //    return runRepository.findById(1);
+    //}
+
+    //Post
+    //Create a method to create a run
+    //controller need to receive the request in JSON matching with the run record with the @Request annotation
+    //to test a post request , use post man
+    //@Postmapping defines the raw data to be posted
+    @PostMapping("")
+    void  create (@RequestBody Run run) {
+        runRepository.create(run);
+    }
+
+    //PUT
+
+    //Delete
 }

@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class RunRepository {
@@ -24,14 +25,29 @@ public class RunRepository {
         return  runs;
     }
 
-    //Method that returns a run by ID
-    //It takes in run ID
-    Run findById(Integer id) {
+    /*
+    *Using Optionals to handle exceptions dynamically
+    *
+     */
+    Optional<Run> findById(Integer id){
         return runs.stream()
                 .filter(run -> run.id() == id)
-                .findFirst()
-                .get();
+                .findFirst();
     }
+
+    //Method to create a run in the run repository to the List
+    void create (Run run) {
+        runs.add(run);
+    }
+
+    //Method that returns a run by ID
+    //It takes in run ID
+//    Run findById(Integer id) {
+//        return runs.stream()
+//                .filter(run -> run.id() == id)
+//                .findFirst()
+//                .get();
+//    }
 
     //Annotation for initialization of a run
     //All records of the run are created here
