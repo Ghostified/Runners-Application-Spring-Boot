@@ -53,7 +53,7 @@ public class RunController {
     Run findById(@PathVariable Integer id) {
         Optional<Run> run = runRepository.findById(id);
         if(run.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Run not found");
         }
         return run.get();
     }
@@ -65,17 +65,29 @@ public class RunController {
     //    return runRepository.findById(1);
     //}
 
+
+
     //Post
-    //Create a method to create a run
+    //a method to create a run
     //controller need to receive the request in JSON matching with the run record with the @Request annotation
     //to test a post request , use post man
-    //@Postmapping defines the raw data to be posted
-    @PostMapping("")
+    @ResponseStatus(HttpStatus.CREATED)  //Anotation for the return status
+    @PostMapping("")  //@PostMapping defines the raw data to be posted
     void  create (@RequestBody Run run) {
         runRepository.create(run);
     }
 
     //PUT
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{id}")
+    void update(@RequestBody Run run,@PathVariable Integer id) {
+        runRepository.update(run, id);
+    }
 
-    //Delete
+    //Delete MAPPING
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Integer id) {
+        runRepository.delete(id);
+    }
 }

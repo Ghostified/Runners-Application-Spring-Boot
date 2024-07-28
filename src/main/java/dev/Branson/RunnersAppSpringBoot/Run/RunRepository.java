@@ -35,8 +35,8 @@ public class RunRepository {
                 .findFirst();
     }
 
-    //Method to create a run in the run repository to the List
-    void create (Run run) {
+    //Method to create a new run in the run repository to the List
+    void create(Run run) {
         runs.add(run);
     }
 
@@ -48,6 +48,20 @@ public class RunRepository {
 //                .findFirst()
 //                .get();
 //    }
+
+    //method for the api UPDATE method
+    //Finds an existing run on the list by id
+    void update(Run run, Integer id) {
+        Optional<Run> existingRun = findById(id);
+        if(existingRun.isPresent()) {
+            runs.set(runs.indexOf(existingRun.get()),run);
+        }
+    }
+
+    //Method to delete an existing run
+    void delete(Integer id) {
+        runs.removeIf(run -> run.id().equals(id));
+    }
 
     //Annotation for initialization of a run
     //All records of the run are created here
