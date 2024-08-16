@@ -81,7 +81,7 @@ public class RunController {
     //PUT,UPDATE
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PutMapping("/{id}")
-    void update(@RequestBody Run run,@PathVariable Integer id) {
+    void update(@Valid @RequestBody Run run,@PathVariable Integer id) {
         runRepository.update(run, id);
     }
 
