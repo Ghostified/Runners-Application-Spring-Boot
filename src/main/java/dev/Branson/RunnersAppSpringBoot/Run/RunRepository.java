@@ -113,7 +113,7 @@ public class RunRepository {
 
     //Method to find a run by ID from the DB
     public  Optional <Run> findById(Integer id) {
-        return jdbcClient.sql("SELECT id, title, started_on, completed_on, miles, location FROM Run WHERE id = :id ")
+        return jdbcClient.sql("SELECT id, title, startedOn, completedOn, miles, location FROM Run WHERE id = :id ")
                 .param("id",id)
                 .query(Run.class)
                 .optional();
@@ -121,7 +121,7 @@ public class RunRepository {
 
     //Method to create a  new Run in the  db
     public void create (Run run) {
-        var updated = jdbcClient.sql("INSERT INTO Run(id, title, started-on, completed_on, miles, location) values(?,?,?,?,?,?)")
+        var updated = jdbcClient.sql("INSERT INTO Run(id, title, startedOn, completedOn, miles, location) values(?,?,?,?,?,?)")
                 .params(List.of(run.id(),run.title(),run.startedOn(),run.completedOn(),run.miles(),run.location(),run.toString()))
                 .update();
 
@@ -130,7 +130,7 @@ public class RunRepository {
 
     //Method to update run in the db
     public void update (Run run, Integer id) {
-        var updated = jdbcClient.sql("update run set title = ?, started_on = ? , completed_on = ? ,miles = ?, location = ?, where id = ? ")
+        var updated = jdbcClient.sql("update run set title = ?, startedOn = ? , completedOn = ? ,miles = ?, location = ? where id = ? ")
                 .params(List.of(run.title(), run.startedOn(), run.completedOn(), run.miles(), run.location(),toString(), id))
                 .update();
 
@@ -146,9 +146,9 @@ public class RunRepository {
         Assert.state(updated == 1, "Failed to delete run " + id);
     }
 
-    //Method to count all runs in the db
+    //Method to count all runs in the in memory  h2 db
     public int count () {
-        return jdbcClient.sql("select 8 from run").query().listOfRows().size();
+        return jdbcClient.sql("select * from run").query().listOfRows().size();
     }
 
     //Method to save several runs in the db

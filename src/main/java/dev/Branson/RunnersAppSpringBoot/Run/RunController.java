@@ -47,48 +47,39 @@ public class RunController {
     List<Run> findAll () {
         return runRepository.findAll();
     }
-//
-//    //mapping from the base uri that will return the run id
-//    //The method uses a dynamic path variable using the @PathVariable annotation
-//    @GetMapping("/{id}")
-//    Run findById(@PathVariable Integer id) {
-//        Optional<Run> run = runRepository.findById(id);
-//        if(run.isEmpty()) {
-//            throw new RunNotFoundException();
-//        }
-//        return run.get();
-//    }
-//
-//    //mapping from the base uri that will return the run id
-//    //The method uses a hard coded id -> 1 to return runs using the method findById(1
-//    //@GetMapping("/1")
-//   // Run findById() {
-//    //    return runRepository.findById(1);
-//    //}
-//
-//
-//
+
+    //mapping from the base uri that will return the run id
+    //The method uses a dynamic path variable using the @PathVariable annotation
+    @GetMapping("/{id}")
+    Run findById(@PathVariable Integer id) {
+        Optional<Run> run = runRepository.findById(id);
+        if(run.isEmpty()) {
+            throw new RunNotFoundException();
+        }
+        return run.get();
+    }
+
 //    //Post
 //    //a method to create a run
 //    //controller need to receive the request in JSON matching with the run record with the @Request annotation
 //    //to test a post request , use post man
-//    @ResponseStatus(HttpStatus.CREATED)  //Anotation for the return status
-//    @PostMapping("")  //@PostMapping defines the raw data to be posted
-//    void  create (@Valid  @RequestBody Run run) {
-//        runRepository.create(run);
-//    }
-//
-//    //PUT,UPDATE
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PutMapping("/{id}")
-//    void update(@Valid @RequestBody Run run,@PathVariable Integer id) {
-//        runRepository.update(run, id);
-//    }
-//
-//    //Delete MAPPING
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @DeleteMapping("/{id}")
-//    void delete(@PathVariable Integer id) {
-//        runRepository.delete(id);
-//    }
+    @ResponseStatus(HttpStatus.CREATED)  //Anotation for the return status
+    @PostMapping("")  //@PostMapping defines the raw data to be posted
+    void  create (@Valid  @RequestBody Run run) {
+        runRepository.create(run);
+    }
+
+    //PUT,UPDATE
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{id}")
+    void update(@Valid @RequestBody Run run,@PathVariable Integer id) {
+        runRepository.update(run, id);
+    }
+
+    //Delete MAPPING
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @DeleteMapping("/{id}")
+    void delete(@PathVariable Integer id) {
+        runRepository.delete(id);
+    }
 }
