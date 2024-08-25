@@ -122,7 +122,7 @@ public class RunRepository {
     //Method to create a  new Run in the  db
     public void create (Run run) {
         var updated = jdbcClient.sql("INSERT INTO Run(id, title, startedOn, completedOn, miles, location) values(?,?,?,?,?,?)")
-                .params(List.of(run.id(),run.title(),run.startedOn(),run.completedOn(),run.miles(),run.location(),run.toString()))
+                .params(List.of(run.id(),run.title(),run.startedOn(),run.completedOn(),run.miles(),run.location().toString()))
                 .update();
 
         Assert.state(updated==1, "Failed to create run " + run.title());

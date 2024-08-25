@@ -4,6 +4,6 @@ CREATE TABLE IF NOT EXISTS Run (
        startedOn timestamp NOT NULL,
        completedOn timestamp NOT NULL,
        miles INT NOT NULL,
-       location varchar(10) NOT NULL,
+       location VARCHAR(25) NOT NULL,
        PRIMARY KEY(id)
 );
